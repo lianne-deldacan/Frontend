@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'https://backend-xszn.onrender.com:5000/api/auth/login'; // Update with your working API URL
+  private apiUrl = 'https://backend-xszn.onrender.com/api/auth/login'; // Update with your working API URL
 
   constructor(private http: HttpClient) {}
 
@@ -16,6 +16,6 @@ export class AuthService {
   }
 
   signup(firstName: string, lastName: string, email: string, password: String): Observable<any> {
-    return this.http.post('https://backend-xszn.onrender.com:5000/api/auth/signup', { firstName, lastName, email, password });
+    return this.http.post('https://backend-xszn.onrender.com/api/auth/signup', { firstName, lastName, email, password });
   } 
 }
