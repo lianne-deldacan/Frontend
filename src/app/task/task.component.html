@@ -1,0 +1,113 @@
+<div class="task-container flex flex-col lg:flex-row justify-between p-4 lg:p-8 space-y-6 lg:space-y-0 lg:space-x-6">
+  <header>
+<button [routerLink]="'/login'" class="bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-3 rounded-lg shadow-md transition 
+         hover:from-red-600 hover:to-red-700 hover:shadow-lg active:scale-95">
+  Sign Out
+</button>
+</header>
+
+  <!-- Task Management System -->
+  <div class="task-system w-full lg:w-1/2 bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-semibold mb-6">Task Management System</h2>
+
+    <!-- Task Form -->
+    <form (submit)="saveTask()">
+      <div class="mb-4">
+        <label for="name" class="block text-sm font-medium text-gray-700">Name:</label>
+        <input id="name" type="text" [(ngModel)]="currentTask.name" name="name" required
+          class="mt-1 p-2 w-full border border-gray-300 rounded-md" />
+      </div>
+
+      <div class="mb-4">
+        <label for="description" class="block text-sm font-medium text-gray-700">Description:</label>
+        <textarea id="description" [(ngModel)]="currentTask.description" name="description" required
+          class="mt-1 p-2 w-full border border-gray-300 rounded-md"></textarea>
+      </div>
+
+      <div class="mb-4">
+        <label for="status" class="block text-sm font-medium text-gray-700">Status:</label>
+        <select id="status" [(ngModel)]="currentTask.status" name="status"
+          class="mt-1 p-2 w-full border border-gray-300 rounded-md">
+          <option value="To complete">To Complete</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label for="date" class="block text-sm font-medium text-gray-700">Date to be Finished:</label>
+        <input id="date" type="date" [(ngModel)]="currentTask.dateToBeFinished" name="dateToBeFinished" required
+          class="mt-1 p-2 w-full border border-gray-300 rounded-md" />
+      </div>
+
+      <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition">{{
+        currentTask._id ? 'Update Task' : 'Add Task' }}</button>
+    </form>
+
+    <!-- Task Table -->
+    <div class="task-table mt-8 overflow-x-auto">
+      <h3 class="text-xl font-semibold mb-4">Task List</h3>
+      <table class="w-full table-auto border-collapse">
+        <thead>
+          <tr class="bg-gray-100 text-sm">
+            <th class="px-4 py-2 text-left">Name</th>
+            <th class="px-4 py-2 text-left">Description</th>
+            <th class="px-4 py-2 text-left">Status</th>
+            <th class="px-4 py-2 text-left">Due Date</th>
+            <th class="px-4 py-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="tasks.length > 0">
+          <tr *ngFor="let task of tasks" class="border-t text-sm">
+            <td class="px-4 py-2">{{ task.name }}</td>
+            <td class="px-4 py-2">{{ task.description }}</td>
+            <td class="px-4 py-2">{{ task.status }}</td>
+            <td class="px-4 py-2">{{ task.dateToBeFinished | date }}</td>
+            <td class="px-4 py-2 flex flex-wrap space-x-2">
+              <button (click)="editTask(task)" class="text-blue-500 hover:text-blue-700">Edit</button>
+              <button (click)="deleteTask(task._id)" class="text-red-500 hover:text-red-700">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="tasks.length === 0">
+          <tr>
+            <td colspan="5" class="text-center py-4 text-gray-600">No tasks available.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Pomodoro Timer -->
+  <div class="pomodoro-timer w-full lg:w-1/3 bg-white p-6 rounded-lg shadow-lg">
+    <h1 class="text-2xl font-semibold mb-6">Pomodoro Timer</h1>
+    <div class="time-display text-4xl font-bold mb-4">
+      <span>{{ minutes | number: '2.0' }}</span>:<span>{{ seconds | number: '2.0' }}</span>
+    </div>
+    <div class="timer-controls mb-4">
+      <input type="number" [(ngModel)]="customMinutes" placeholder="Enter minutes" min="1" max="120"
+        class="p-2 w-full md:w-32 border border-gray-300 rounded-md" />
+      <button (click)="setTimer()"
+        class="mt-2 md:mt-0 md:ml-4 w-full md:w-auto bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition">Set
+        Timer</button>
+    </div>
+    <div class="timer-actions mb-6 flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
+      <button (click)="startTimer()"
+        class="w-full md:w-auto bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition">Start</button>
+      <button (click)="resetTimer()"
+        class="w-full md:w-auto bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition">Reset</button>
+    </div>
+
+    <!-- Spotify Embed -->
+    <div class="spotify-embed mt-6">
+      <iframe style="border-radius:12px"
+        src="https://open.spotify.com/embed/album/4gTLHYkLHFcHrYNjxNDjJM?utm_source=generator" width="100%" height="352"
+        frameborder="0" allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+  </div>
+</div>
+
+  <footer class="text-center mt-8 mb-8 text-black-600 dark:text-gray-800">
+    Designed and developed by Lianne Deldacan
+  </footer>
